@@ -1,5 +1,6 @@
 package com.github.origin.relaunch;
 
+import static java.lang.String.format;
 import static java.lang.Thread.sleep;
 import static java.nio.file.Files.move;
 import static java.nio.file.Paths.get;
@@ -14,6 +15,7 @@ public class Relaunch {
 		String oldApp = args[0];
 		String newApp = args[1];
 		String launchScript = args[2];
+		System.out.println(format("Relaunching %s %s %s", oldApp, newApp, launchScript));
 		
 		while(!new File(oldApp).delete()) {
 			System.out.println(new Date() + " waiting to delete "+oldApp);
@@ -21,7 +23,7 @@ public class Relaunch {
 		}
 		
 		move(get(newApp), get(oldApp));
-		new ProcessBuilder(launchScript).start();
+		new ProcessBuilder("cmd.exe", "/C", launchScript).start();
 	}
 
 }
