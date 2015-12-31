@@ -15,9 +15,10 @@ public class Relaunch {
 	public static void main(String[] args) throws InterruptedException, IOException {
 		String oldApp = args[0];
 		String newApp = args[1];
-		String[] launchScript =  new String[args.length-2];
-		System.arraycopy(args, 2, launchScript, 0, launchScript.length);
-		System.out.println(format("Relaunching %s %s %s", oldApp, newApp, asList(launchScript)));
+		String logLocation = args[2];
+		String[] launchScript =  new String[args.length-3];
+		System.arraycopy(args, 3, launchScript, 0, launchScript.length);
+		System.out.println(format("Relaunching %s %s %s %s", oldApp, newApp, logLocation, asList(launchScript)));
 		checkFile(oldApp);
 		checkFile(newApp);
 		while(!new File(oldApp).delete()) {
@@ -26,7 +27,10 @@ public class Relaunch {
 		}
 		
 		move(get(newApp), get(oldApp));
-		new ProcessBuilder(launchScript).start();
+		new ProcessBuilder(launchScript)
+		  .redirectErrorStream(true)
+		  .redirectOutput(new File(logLocation))
+		  .start();
 	}
 
 	private static void checkFile(String oldApp) {
