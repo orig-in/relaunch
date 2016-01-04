@@ -46,7 +46,7 @@
 				<configuration>
 					<repositoryOwner>orig-in</repositoryOwner>
 					<repositoryName>orig-in.github.io</repositoryName>
-					<message>update website</message>
+					<message>update ${project.artifactId}.jar</message>
 					<oauth2Token>${env.github_oauth2Token_orig_in}</oauth2Token>
 					<outputDirectory>${project.build.directory}</outputDirectory>
 					<branch>refs/heads/master</branch>
