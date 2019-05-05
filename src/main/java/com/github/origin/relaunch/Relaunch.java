@@ -19,9 +19,9 @@ public class Relaunch {
 		String[] launchScript =  new String[args.length-3];
 		System.arraycopy(args, 3, launchScript, 0, launchScript.length);
 		System.out.println(format("Relaunching %s %s %s %s", oldApp, newApp, logLocation, asList(launchScript)));
-		checkFile(oldApp);
 		checkFile(newApp);
-		while(!new File(oldApp).delete()) {
+		File oldAppFile = new File(oldApp);
+		while(oldAppFile.exists() && !oldAppFile.delete()) {
 			System.out.println(new Date() + " waiting to delete "+oldApp);
 			sleep(1000);
 		}
@@ -33,9 +33,9 @@ public class Relaunch {
 		  .start();
 	}
 
-	private static void checkFile(String oldApp) {
-		if(!new File(oldApp).exists()) {
-			System.out.println(oldApp + " does not exist");
+	private static void checkFile(String fileName) {
+		if(!new File(fileName).exists()) {
+			System.out.println(fileName + " does not exist");
 			System.exit(1);
 		}
 	}
